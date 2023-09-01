@@ -43,6 +43,28 @@ class UserServices {
     }
   }
 
+  async isAuthenticated(token) {
+    try {
+      const response = this.verifyToken(token);
+
+      if (!response) {
+        console.log("Invalid token");
+        throw { errpr: "Invalid token" };
+      }
+
+      const user = await this.userRepository.getById(response.id);
+
+      if (!user) {
+        console.log("Token is expired now");
+        throw { error: "Token is expired now" };
+      }
+
+      return response;
+    } catch (error) {
+      console.log("Something wrong in authenticating jwt token", error);
+      throw error;
+    }
+  }
   async destroy(userId) {
     try {
       const response = await this.UserRepository.destroy(userId);
