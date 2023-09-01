@@ -47,7 +47,30 @@ const destroy = async (req, res) => {
   }
 };
 
+const signIn = async (req, res) => {
+  try {
+    const response = await userServices.signIn(
+      req.body.email,
+      req.body.password
+    );
+    return res.status(200).json({
+      data: response,
+      message: "Successfully login",
+      success: true,
+      err: {},
+    });
+  } catch (error) {
+    return res.status(500).json({
+      data: {},
+      message: "login failed",
+      success: false,
+      err: { error },
+    });
+  }
+};
+
 module.exports = {
   create,
   destroy,
+  signIn,
 };
