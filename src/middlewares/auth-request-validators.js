@@ -11,6 +11,19 @@ const validUserauth = (req, res, next) => {
   next();
 };
 
+const validAdminReq = (req, res, next) => {
+  if (!req.body.id) {
+    return res.status(400).json({
+      success: false,
+      data: {},
+      message: "UserId is missing",
+      err: { error: "valid input is required" },
+    });
+  }
+  next();
+};
+
 module.exports = {
   validUserauth,
+  validAdminReq,
 };

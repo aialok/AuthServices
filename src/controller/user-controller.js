@@ -27,9 +27,7 @@ const create = async (req, res) => {
 
 const destroy = async (req, res) => {
   try {
-    const response = await userServices.delete({
-      id: req.params.id,
-    });
+    const response = await userServices.destroy(req.body.id);
 
     return res.status(200).json({
       data: response,
@@ -91,9 +89,29 @@ const isAuthenticated = async (req, res) => {
   }
 };
 
+const isAdmin = async (req, res) => {
+  try {
+    const response = await userServices.isAdmin(req.body.id);
+    return res.status(200).json({
+      data: response,
+      message: "Successfully fetched isAdmin",
+      success: true,
+      err: {},
+    });
+  } catch (error) {
+    return res.status(500).json({
+      data: {},
+      message: "Error in checking isAdmin",
+      success: false,
+      err: { error },
+    });
+  }
+};
+
 module.exports = {
   create,
   destroy,
   signIn,
   isAuthenticated,
+  isAdmin,
 };

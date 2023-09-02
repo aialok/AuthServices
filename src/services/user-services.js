@@ -65,12 +65,22 @@ class UserServices {
       throw error;
     }
   }
+
   async destroy(userId) {
     try {
-      const response = await this.UserRepository.destroy(userId);
+      const response = await this.userRepository.deleteUser(userId);
       return response;
     } catch (error) {
-      console.log("Something wrong in user repository");
+      console.log("Something wrong in user service", error);
+      throw error;
+    }
+  }
+
+  async isAdmin(userId) {
+    try {
+      return await this.userRepository.isAdmin(userId);
+    } catch (error) {
+      console.log("Something wrong checking isAdmin", error);
       throw error;
     }
   }
